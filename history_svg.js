@@ -6,6 +6,7 @@ function addHistorySVG(historyJson, container) {
   var svg = document.createElementNS(svgNS, 'svg');
   container.append(svg);
   var padding = 10;
+  var yAxis = parseInt(height/2) - 1;
   svg.setAttribute('width', width);
   svg.setAttribute('height', height);
 
@@ -28,9 +29,24 @@ function addHistorySVG(historyJson, container) {
   var historyLine = svg.appendChild(document.createElementNS(svgNS, 'line'));
   historyLine.setAttribute('x1', padding);
   historyLine.setAttribute('x2', width - padding * 2);
-  historyLine.setAttribute('y1', parseInt(height/2) - 1);
-  historyLine.setAttribute('y2', parseInt(height/2) - 1);
+  historyLine.setAttribute('y1', yAxis);
+  historyLine.setAttribute('y2', yAxis);
   historyLine.setAttribute('style', 'stroke:rgb(0,0,0);stroke-width:2');
+
+  // draw history dots
+  for (var release in historyJson) {
+    (function(offset, hasChanges) {
+      var circle = svg.appendChild(document.createElementNS(svgNS, 'circle'));
+      circle.setAttribute('cx', offset);
+      circle.setAttribute('cy', yAxis);
+      circle.setAttribute('r', 4);
+      circle.setAttribute('stroke', 'black');
+      circle.setAttribute('stroke-width', 1);
+      if (hasChanges) {
+        circle.setAttribute('fill', 'black');
+      }
+    })(historyJson[release].offset, !!historyJson[release].changes);
+  }
 }
 
 function monthsSince0000(date) {
