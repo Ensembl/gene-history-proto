@@ -24,7 +24,7 @@ div#svg-tip ul, .results .changes ul {
   padding-left: 5px;
 }
 
-div#svg-tip li {
+div#svg-tip li, .results .changes ul li {
   list-style-type: none;
 }
 
