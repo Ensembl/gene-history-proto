@@ -4,6 +4,7 @@ function addHistorySVG(historyJson, container) {
   var height = container.height();
   var width = container.width();
   var svg = document.createElementNS(svgNS, 'svg');
+  var lastRelease = 0;
   container.append(svg);
   var padding = 10;
   var yAxis = parseInt(height/2) - 1;
@@ -23,6 +24,9 @@ function addHistorySVG(historyJson, container) {
 
   for (var release in historyJson) {
     historyJson[release].offset = padding + (monthsSince0000(historyJson[release].date) - monthRange[0]) * oneMonthInPixels;
+    if (release > lastRelease) {
+      lastRelease = release;
+    }
   }
 
   // draw years bar
@@ -72,6 +76,14 @@ function addHistorySVG(historyJson, container) {
       });
     })(historyJson[release].offset, release, historyJson[release].changes);
   }
+
+  // shaded selection box
+  var selectionBox = svg.appendChild(document.createElementNS(svgNS, 'rectangle'));
+  selectionBox.setAttribute('y', 0);
+  selectionBox.setAttribute('x', (historyJson[lastRelease].offset + historyJson[lastRelease - 1].offset) / 2);
+  selectionBox.setAttribute('width', (historyJson[lastRelease].offset - historyJson[lastRelease - 1].offset) / 2);
+  selectionBox.setAttribute('height', height);
+  selectionBox.setAttribute('style', 'fill:rgb(50,150,50);fill-opacity:0.4');
 }
 
 function monthsSince0000(date) {
