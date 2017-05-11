@@ -100,7 +100,7 @@ function compileChanges(changes) {
 
   var html = '';
   for (var type in changes) {
-    html = html + '<li>' + type + '</li>';
+    html = html + '<li><span class="colour-box" style="background-color:' + COLOURS[type] + '"></span>' + type + '</li>';
   }
 
   return '<ul>' + html + '</ul>';
