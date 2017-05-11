@@ -53,6 +53,9 @@ function addHistorySVG(historyJson, container) {
     }
   }
 
+  // shaded selection box
+  var selectionBox = svg.appendChild(document.createElementNS(svgNS, 'rect'));
+
   // draw line
   var historyLine = svg.appendChild(document.createElementNS(svgNS, 'line'));
   historyLine.setAttribute('x1', 0);
@@ -82,8 +85,6 @@ function addHistorySVG(historyJson, container) {
     })(releaseOffsets[release], release, historyJson[release].changes);
   }
 
-  // shaded selection box
-  var selectionBox = svg.appendChild(document.createElementNS(svgNS, 'rect'));
   drawSelectionBox(container, lastRelease);
 }
 
@@ -106,7 +107,7 @@ function compileChanges(changes) {
 
 function drawSelectionBox(container, release) {
   var svg = container.find('svg')[0];
-  var selectionBox = svg.lastChild;
+  var selectionBox = svg.getElementsByTagName('rect')[0];
 
   selectionBox.setAttribute('y', 0);
   selectionBox.setAttribute('x', (releaseOffsets[release] + releaseOffsets[release - 1] || 0) / 2);
