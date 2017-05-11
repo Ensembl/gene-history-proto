@@ -1,5 +1,8 @@
 var svgNS = 'http://www.w3.org/2000/svg';
 
+var releaseOffsets = {};
+var dimensions = {}
+
 function addHistorySVG(historyJson, container) {
   var height = container.height();
   var width = container.width();
@@ -10,6 +13,8 @@ function addHistorySVG(historyJson, container) {
   var yAxis = parseInt(height/2) - 1;
   svg.setAttribute('width', width);
   svg.setAttribute('height', height);
+  dimensions.width = width;
+  dimensions.height = height;
 
   var monthRange = (function() {
     var months = [];
@@ -23,7 +28,7 @@ function addHistorySVG(historyJson, container) {
   var oneMonthInPixels = (width - padding * 2) / (monthRange[1] - monthRange[0]);
 
   for (var release in historyJson) {
-    historyJson[release].offset = padding + (monthsSince0000(historyJson[release].date) - monthRange[0]) * oneMonthInPixels;
+    releaseOffsets[release] = padding + (monthsSince0000(historyJson[release].date) - monthRange[0]) * oneMonthInPixels;
     if (release > lastRelease) {
       lastRelease = release;
     }
@@ -74,16 +79,12 @@ function addHistorySVG(historyJson, container) {
       $(circle).mouseleave(function() {
         $('#svg-tip').empty().hide();
       });
-    })(historyJson[release].offset, release, historyJson[release].changes);
+    })(releaseOffsets[release], release, historyJson[release].changes);
   }
 
   // shaded selection box
   var selectionBox = svg.appendChild(document.createElementNS(svgNS, 'rect'));
-  selectionBox.setAttribute('y', 0);
-  selectionBox.setAttribute('x', (historyJson[lastRelease].offset + historyJson[lastRelease - 1].offset) / 2);
-  selectionBox.setAttribute('width', width - (historyJson[lastRelease].offset + historyJson[lastRelease - 1].offset) / 2);
-  selectionBox.setAttribute('height', height);
-  selectionBox.setAttribute('style', 'fill:rgb(185, 255, 50);fill-opacity:0.4');
+  drawSelectionBox(container, lastRelease);
 }
 
 function monthsSince0000(date) {
@@ -101,4 +102,15 @@ function compileChanges(changes) {
   }
 
   return '<ul>' + html + '</ul>';
+}
+
+function drawSelectionBox(container, release) {
+  var svg = container.find('svg')[0];
+  var selectionBox = svg.lastChild;
+
+  selectionBox.setAttribute('y', 0);
+  selectionBox.setAttribute('x', (releaseOffsets[release] + releaseOffsets[release - 1]) / 2);
+  selectionBox.setAttribute('width', dimensions.width - (releaseOffsets[release] + releaseOffsets[release - 1]) / 2);
+  selectionBox.setAttribute('height', dimensions.height);
+  selectionBox.setAttribute('style', 'fill:rgb(185, 255, 50);fill-opacity:0.4');
 }
