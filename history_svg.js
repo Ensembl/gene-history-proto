@@ -1,22 +1,22 @@
 var svgNS = 'http://www.w3.org/2000/svg';
 
 function addHistorySVG(historyJson, container) {
-  var svg = document.createElementNS(svgNS, 'svg');
-  container.append(svg);
   var height = container.height();
   var width = container.width();
+  var svg = document.createElementNS(svgNS, 'svg');
+  container.append(svg);
   var padding = 10;
   svg.setAttribute('width', width);
   svg.setAttribute('height', height);
 
-  var monthRange = function() {
+  var monthRange = (function() {
     var months = [];
     for (var release in historyJson) {
       months.push(monthsSince0000(historyJson[release].date));
     }
     months = months.sort();
     return months.length > 1 ? [ months.shift() - 1, months.pop() ] : [ months[0] - 1, months[0] ];
-  }
+  })();
 
   var oneMonthInPixels = (width - padding * 2) / (monthRange[1] - monthRange[0]);
 
