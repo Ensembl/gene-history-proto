@@ -22,7 +22,7 @@ $(document).on('ready', function() {
     url: historyURL,
     dataType: 'json',
     success: function (json) {
-      addHistorySVG(json, $('_svg_container'));
+      addHistorySVG(json, $('._svg_container'));
       populateSelectBox($('#dd_changes'), $('#dd_rel'), json);
     }
   });
