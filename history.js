@@ -33,6 +33,8 @@ $(document).on('ready', function() {
     url: historyURL,
     dataType: 'json',
     success: function (json) {
+      // replace gene name in the JSON accordng top url hash
+      json = JSON.parse(JSON.stringify(json).replace(/__gene__/g, (window.location.hash.match('gene=([^\;]+)') || ['XYZ']).pop()));
       addHistorySVG(json, $('._svg_container'));
       populateReleaseBox($('#dd_rel'), json);
       // populateSelectBox($('#dd_changes'), json);
