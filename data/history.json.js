@@ -5,8 +5,8 @@
 			"year": "2017"
 		},
 		"changes": {
-			"New transcript": ["HLA-B-201(ENST00000639564.1)", "GNAS-072(ENST00000639562.1)"],
-			"Retired transcript": ["NDUFA10-004(ENST00000626224.2)"]
+			"New transcript": ["__gene__-213(ENST00000639564.1)", "__gene__-072(ENST00000639562.1)"],
+			"Retired transcript": ["__gene__-004(ENST00000626224.2)"]
 		}
 	},
 
@@ -100,7 +100,7 @@
 			"year": "2014"
 		},
 		"changes": {
-			"Transcript sequence changed": ["MED25-202(ENST00000612791.4)"],
+			"Transcript sequence changed": ["__gene__-202(ENST00000612791.4)"],
 			"Assembly changed": ["GRCH38"]
 		}
 	},
