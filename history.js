@@ -29,6 +29,10 @@ var populateReleaseBox = function (ele, dataArray) {
   });
 };
 
+var displayTranscriptImage = function() {
+  alert('show image')
+}
+
 $(document).on('ready', function() {
   $('#gene-name-heading').html(GENE);
   $.ajax({
@@ -40,25 +44,41 @@ $(document).on('ready', function() {
       addHistorySVG(json, $('._svg_container'));
       populateReleaseBox($('#dd_rel'), json);
       // populateSelectBox($('#dd_changes'), json);
-
       $('#dd_changes').on('change', function() {
         var change_key = $(this).val();
         var rel_key = $('#dd_rel').val();
+
         var html = '';
         if (change_key == 'All changes') {
           html += '<p class="title">'+ change_key +'</p>';
-          if (json[rel_key]['changes']) {
-            $.each(json[rel_key]['changes'], function(ch) {
-              html += '<ul class="all_changes">';
-              html += '<li>'+ ch +'</li>';
-              $.each(json[rel_key]['changes'][ch], function(i, val) {
-                html += '<ul class="changes">';
-                html += '<li>'+ val +'</li>';
+
+          $.each(Object.keys(json).reverse(), function(i, rel) {
+            console.log('Running ', rel);
+            if (json[rel]['changes']) {
+              html += '<p class="title">Release '+ rel +'</p>';
+            }
+            if (json[rel]['changes']) {
+              console.log('Found', rel);
+              $.each(json[rel]['changes'], function(ch) {
+                html += '<ul class="all_changes">';
+                html += '<li>'+ ch +'</li>';
+                $.each(json[rel]['changes'][ch], function(i, val) {
+                  html += '<ul class="changes">';
+                  if (ch == 'Transcript sequence changed' || ch == 'Protein sequence changed') {
+                    val = '<a href="javascript:displayTranscriptImage();">' + val + '</a> <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">View</button>';
+                  }
+                  html += '<li>'+ val +'</li>';
+                  html += '</ul>';
+                });
                 html += '</ul>';
-              });
-              html += '</ul>';
-            })
-          }
+              })
+            }
+            if (rel == rel_key) {
+              console.log(html);
+              $('.results').html(html);
+              return false;
+            }
+          })
         }          
         else {
           if (json[rel_key]['changes'] && json[rel_key]['changes'][change_key]) {
@@ -82,8 +102,9 @@ $(document).on('ready', function() {
       });
 
       $('#dd_rel').trigger('change');
-
     }
   });
+
+
 
 });
