@@ -35,17 +35,18 @@ function addHistorySVG(historyJson, container) {
 
   // draw history dots
   for (var release in historyJson) {
-    (function(offset, hasChanges) {
+    (function(offset, release, changes) {
       var circle = svg.appendChild(document.createElementNS(svgNS, 'circle'));
       circle.setAttribute('cx', offset);
       circle.setAttribute('cy', yAxis);
       circle.setAttribute('r', 4);
       circle.setAttribute('stroke', 'black');
       circle.setAttribute('stroke-width', 1);
-      if (hasChanges) {
+      if (!!changes) {
         circle.setAttribute('fill', 'black');
       }
-    })(historyJson[release].offset, !!historyJson[release].changes);
+      $(circle).tooltip({content: 'Release: ' + release + '<br>' + 'Changes: ' + (changes || 'No changes') });
+    })(historyJson[release].offset, release, historyJson[release].changes);
   }
 }
 
