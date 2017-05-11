@@ -1,4 +1,5 @@
 var historyURL = 'https://ens-hsr.github.io/gene-history-proto/data/history.json.js';
+var GENE = (window.location.hash.match('gene=([^\;]+)') || ['XYZ']).pop();
 
 var populateSelectBox = function (ele, dataArray) {
   var changes = {};
@@ -29,12 +30,13 @@ var populateReleaseBox = function (ele, dataArray) {
 };
 
 $(document).on('ready', function() {
+  $('#gene-name-heading').html(GENE);
   $.ajax({
     url: historyURL,
     dataType: 'json',
     success: function (json) {
       // replace gene name in the JSON accordng top url hash
-      json = JSON.parse(JSON.stringify(json).replace(/__gene__/g, (window.location.hash.match('gene=([^\;]+)') || ['XYZ']).pop()));
+      json = JSON.parse(JSON.stringify(json).replace(/__gene__/g, GENE));
       addHistorySVG(json, $('._svg_container'));
       populateReleaseBox($('#dd_rel'), json);
       // populateSelectBox($('#dd_changes'), json);
