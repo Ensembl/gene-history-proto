@@ -5,7 +5,7 @@
 			"year": "2017"
 		},
 		"changes": {
-			"New transcript": ["__gene__-213 (ENST00000639564.1)", "__gene__-072 (ENST00000639562.1)"],
+			"New transcripts": ["__gene__-213 (ENST00000639564.1)", "__gene__-072 (ENST00000639562.1)"],
 			"Retired transcript": ["__gene__-004 (ENST00000626224.2)"]
 		}
 	},
