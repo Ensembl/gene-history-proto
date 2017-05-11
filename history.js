@@ -32,7 +32,7 @@ var populateReleaseBox = function (ele, dataArray) {
 
 var displayImage = function(e, r) {
   console.log(r);
-  var img1 = '/images/sequence_change.png';
+  var img1 = '/gene-history-proto/images/sequence_change.png';
   $(e.target).siblings('div.image').html('<br><img src='+ img1 +'></img><button type="button" class="btn btn-primary"> Download Sequence</button>');
 }
 
