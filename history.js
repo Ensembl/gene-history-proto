@@ -32,8 +32,8 @@ var populateReleaseBox = function (ele, dataArray) {
 
 var displayImage = function(e) {
   console.log('a');
-  var img1 = '/images/trans1.png';
-  var img2 = '/images/trans2.png';
+  var img1 = '/gene-history-proto/images/trans1.png';
+  var img2 = '/gene-history-proto/images/trans2.png';
   // console.log(e);
   console.log($(e.target).next().length);
   if (!$(e.target).next('div.image').length) {
