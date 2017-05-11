@@ -77,9 +77,9 @@ $(document).on('ready', function() {
             if (json[rel]['changes']) {
               html += '<p class="title">Release '+ rel +'</p>';
 
-              $.each(json[rel]['changes'], function(ch) {
+              $.each(json[rel]['changes'], function(type, ch) {
                 html += '<ul class="all_changes">';
-                html += '<li>'+ ch +'</li>';
+                html += '<li><span class="colour-box" style="background-color:' + COLOURS[type] + '"></span>'+ ch +'</li>';
 
                 if (json[rel]['changes'][ch]) {
                   $.each(json[rel]['changes'][ch], function(i, val) {
