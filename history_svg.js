@@ -1,7 +1,8 @@
 var svgNS = 'http://www.w3.org/2000/svg';
 
 function addHistorySVG(historyJson, container) {
-  var svg = container.append(document.createElementNS(svgNS, 'svg'));
+  var svg = document.createElementNS(svgNS, 'svg');
+  container.append(svg);
   var height = container.height();
   var width = container.width();
   var padding = 10;
