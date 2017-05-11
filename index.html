@@ -9,6 +9,7 @@
   src="https://code.jquery.com/jquery-2.2.4.min.js"
   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
   crossorigin="anonymous"></script><script type="text/javascript" src="history.js"></script>
+<script type="text/javascript" src="history.js"></script>
 <link rel="stylesheet" type="text/css" href="history.css">
 </head>
 <body>
@@ -20,10 +21,22 @@
     </div>
     <div class="panel-body">
       <div class="_svg_container svg-container"></div>
-      <div class="_dropdown_container">
-        <div class="filters">
-          <div> Filter <select id="dd_changes"></select> </div>
-          <div> Select release <select id="dd_rel"></select> </div>
+      <div class="_dropdown_container filters">
+        <div class="row">
+          <div class="form-group">
+            <div class="col-xs-3">
+              <div> 
+                <label> Filter </label> 
+                <select id="dd_changes" class="form-control"></select> 
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <div> 
+                <label> Select release </label> 
+                <select id="dd_rel" class="form-control"></select> 
+              </div>
+            </div>
+          </div>
         </div>
       </div>
      </div>
