@@ -34,3 +34,7 @@ div.image img {
 .results .changes button {
   margin: 8px;
 }
+
+.results .title {
+  font-weight: bold;
+}

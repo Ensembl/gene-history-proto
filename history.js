@@ -2,21 +2,31 @@ var historyURL = 'https://ens-hsr.github.io/gene-history-proto/data/history.json
 var GENE = (window.location.hash.match('gene=([^\;]+)') || ['XYZ']).pop();
 
 var populateSelectBox = function (ele, dataArray) {
-  var changes = {};
+  var all_changes = {};
   $.each(dataArray, function (k) {
     $.each(dataArray[k].changes, function(ch) {
-      changes[ch]++;
+      all_changes[ch] = 1;
     })
+  });
+
+  var available_changes = {};
+  var rel_key = $('#dd_rel').val();
+  $.each(Object.keys(dataArray).reverse(), function(i, rel) {
+    $.each(dataArray[rel].changes, function(ch) {
+      available_changes[ch] = 1;
+    });
+    if (rel == rel_key) {
+      return false;
+    }
   });
 
   ele.html('');
   ele.append("<option> All changes </option>");
-  Object.keys(changes).forEach(function(change) {
+  Object.keys(all_changes).forEach(function(change) {
     var icon = '<span class="glyphicon glyphicon-unchecked aria-hidden="true"></span>';
     var disabled = 'disabled';
-    if (dataArray[$('#dd_rel').val()]['changes']) {
-      disabled = (dataArray[$('#dd_rel').val()]['changes'][change])? '' : 'disabled';
-    }
+
+    disabled = available_changes[change] ? '' : 'disabled';
     ele.append("<option "+ disabled +">" + change + "</option>");
   });
 };
@@ -32,6 +42,7 @@ var populateReleaseBox = function (ele, dataArray) {
 
 var _alert = function(str) {
   alert(str);
+  confirm('Would you like to get alerts when something changes for this gene? CLICK HERE')
 }
 
 var displayImage = function(e, r) {
@@ -50,34 +61,43 @@ $(document).on('ready', function() {
       addHistorySVG(json, $('._svg_container'));
       populateReleaseBox($('#dd_rel'), json);
       // populateSelectBox($('#dd_changes'), json);
+
       $('#dd_changes').on('change', function() {
         var change_key = $(this).val();
         var rel_key = $('#dd_rel').val();
         $('#release-heading').html(" "+$('#dd_rel option:selected').text());
         drawSelectionBox($('#svg-container'), rel_key);
         var html = '';
+
+
         if (change_key == 'All changes') {
           html += '<p class="title" style="font-weight:bold; margin-top:20px;">'+ change_key +'</p>';
 
           $.each(Object.keys(json).reverse(), function(i, rel) {
             if (json[rel]['changes']) {
               html += '<p class="title">Release '+ rel +'</p>';
-            }
-            if (json[rel]['changes']) {
+
               $.each(json[rel]['changes'], function(ch) {
                 html += '<ul class="all_changes">';
                 html += '<li>'+ ch +'</li>';
-                $.each(json[rel]['changes'][ch], function(i, val) {
-                  html += '<ul class="changes">';
-                  if (ch == 'Transcript sequence changed' || ch == 'Protein sequence changed') {
-                    val = val + ' <button type="button" class="btn btn-default" onClick=displayImage(event,"'+rel+'");>View</button><div class="image"></div>';
-                  }
-                  html += '<li>'+ val +'</li>';
-                  html += '</ul>';
-                });
+
+                if (json[rel]['changes'][ch]) {
+                  $.each(json[rel]['changes'][ch], function(i, val) {
+                    html += '<ul class="changes">';
+                    if (ch == 'Transcript sequence changed' || ch == 'Protein sequence changed') {
+                      val = val + ' <button type="button" class="btn btn-default" onClick=displayImage(event,"'+rel+'");>View</button><div class="image"></div>';
+                    }
+                    html += '<li>'+ val +'</li>';
+                    html += '</ul>';
+                  });
+                }
+                else {
+                  html += '<p> -- Nothing changed </p>'
+                }
                 html += '</ul>';
               })
             }
+
             if (rel == rel_key) {
               $('.results').html(html);
               return false;
@@ -85,18 +105,33 @@ $(document).on('ready', function() {
           })
         }          
         else {
-          if (json[rel_key]['changes'] && json[rel_key]['changes'][change_key]) {
-            // console.log(json[rel_key]['changes'][key]);
-            html = '<p class="title" style="font-weight:bold; margin-top:20px;">'+ change_key +'</p>';
-            $.each(json[rel_key]['changes'][change_key], function(i, val) {
-              html += '<ul class="changes">';
-              if (change_key == 'Transcript sequence changed' || change_key == 'Protein sequence changed') {
-                val = val + ' <button type="button" class="btn btn-default" onClick=displayImage(event,"'+rel_key+'");>View</button><div class="image"></div>';
+
+          html += '<p class="title" style="font-weight:bold; margin-top:20px;">'+ change_key +'</p>';
+
+          $.each(Object.keys(json).reverse(), function(i, rel) {
+            if (json[rel]['changes']) {
+              html += '<p class="title">Release '+ rel +'</p>';
+
+              if (json[rel]['changes'][change_key]) {
+                $.each(json[rel]['changes'][change_key], function(i, val) {
+                  html += '<ul class="changes">';
+                  if (change_key == 'Transcript sequence changed' || change_key == 'Protein sequence changed') {
+                    val = val + ' <button type="button" class="btn btn-default" onClick=displayImage(event,"'+rel+'");>View</button><div class="image"></div>';
+                  }
+                  html += '<li>'+ val +'</li>';
+                  html += '</ul>';
+                });
               }
-              html += '<li>'+ val +'</li>';
-              html += '</ul>';
-            })
-          }
+              else {
+                html += '<p> -- Nothing changed </p>';
+              }
+            }
+
+            if (rel == rel_key) {
+              $('.results').html(html);
+              return false;
+            }
+          })
         }
 
         $('.results').html(html);
@@ -109,6 +144,10 @@ $(document).on('ready', function() {
       });
 
       $('#dd_rel').trigger('change');
+
+      // $('#notification-message').on('show.bs.modal', function(e) {
+      // });
+
     }
   });
 
