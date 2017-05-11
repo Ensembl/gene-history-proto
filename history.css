@@ -20,14 +20,20 @@ div#svg-tip {
   border-radius: 3px;
 }
 
+div#svg-tip ul, .results .changes ul {
+  padding-left: 5px;
+}
+
 div#svg-tip li {
   list-style-type: none;
 }
 
 span.colour-box {
-  height: 20px;
-  width: 30px;
+  height: 15px;
+  width: 24px;
   display: inline-block;
+  margin-right: 7px;
+  border-radius: 2px;
 }
 
 div.image img {
