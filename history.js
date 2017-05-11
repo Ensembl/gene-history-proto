@@ -90,6 +90,9 @@ $(document).on('ready', function() {
             html = '<p class="title" style="font-weight:bold; margin-top:20px;">'+ change_key +'</p>';
             $.each(json[rel_key]['changes'][change_key], function(i, val) {
               html += '<ul class="changes">';
+              if (change_key == 'Transcript sequence changed' || change_key == 'Protein sequence changed') {
+                val = val + ' <button type="button" class="btn btn-default" onClick=displayImage(event,"'+rel_key+'");>View</button><div class="image"></div>';
+              }
               html += '<li>'+ val +'</li>';
               html += '</ul>';
             })
