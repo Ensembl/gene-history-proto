@@ -78,7 +78,7 @@ function addHistorySVG(historyJson, container) {
   }
 
   // shaded selection box
-  var selectionBox = svg.appendChild(document.createElementNS(svgNS, 'rectangle'));
+  var selectionBox = svg.appendChild(document.createElementNS(svgNS, 'rect'));
   selectionBox.setAttribute('y', 0);
   selectionBox.setAttribute('x', (historyJson[lastRelease].offset + historyJson[lastRelease - 1].offset) / 2);
   selectionBox.setAttribute('width', (historyJson[lastRelease].offset - historyJson[lastRelease - 1].offset) / 2);
