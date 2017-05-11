@@ -23,9 +23,7 @@ $(document).on('ready', function() {
     dataType: 'json',
     success: function (json) {
       addHistorySVG(json, $('_svg_container'));
-      var dd_changes = $('#dd_changes');
-      var dd_rel = $('#dd_rel');
-      populateSelectBox(dd_changes, dd_rel, dataArray);
+      populateSelectBox($('#dd_changes'), $('#dd_rel'), json);
     }
   });
 });
