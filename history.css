@@ -19,6 +19,10 @@ div#svg-tip {
   border-radius: 3px;
 }
 
+div#svg-tip li {
+  list-style-type: none;
+}
+
 span.colour-box {
   height: 20px;
   width: 30px;
