@@ -107,6 +107,7 @@ $(document).on('ready', function() {
               html += '<p class="title">Release '+ rel +'</p>';
 
               if (json[rel]['changes'][change_key]) {
+                html += '<ul>';
                 html += '<li><span class="colour-box" style="background-color:' + COLOURS[change_key] + '"></span>'+ change_key +'</li>';
                 $.each(json[rel]['changes'][change_key], function(i, val) {
                   html += '<ul class="changes">';
@@ -116,6 +117,8 @@ $(document).on('ready', function() {
                   html += '<li>'+ val +'</li>';
                   html += '</ul>';
                 });
+                html += '</ul>';
+
               }
               else {
                 html += '<p> -- Nothing changed </p>';
