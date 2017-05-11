@@ -35,7 +35,7 @@ var populateReleaseBox = function (ele, dataArray) {
   ele.html('');
   ele.html('');
   Object.keys(dataArray).reverse().forEach(function(rel) {
-    ele.append("<option value="+ rel +">release " + rel + " ("+ dataArray[rel].date.month_string + "/" + dataArray[rel].date.year+")</option>");    
+    ele.append("<option value="+ rel +">release " + (rel-1) + " ("+ dataArray[rel].date.month_string + "/" + dataArray[rel].date.year+")</option>");    
   });
 };
 
@@ -69,8 +69,6 @@ $(document).on('ready', function() {
 
 
         if (change_key == 'All changes') {
-          html += '<p class="title" style="font-weight:bold; margin-top:20px;">'+ change_key +'</p>';
-
           $.each(Object.keys(json).reverse(), function(i, rel) {
             if (json[rel]['changes']) {
               html += '<p class="title">Release '+ rel +'</p>';
@@ -103,8 +101,6 @@ $(document).on('ready', function() {
           })
         }          
         else {
-
-          html += '<p class="title" style="font-weight:bold; margin-top:20px;">'+ change_key +'</p>';
 
           $.each(Object.keys(json).reverse(), function(i, rel) {
             if (json[rel]['changes']) {
