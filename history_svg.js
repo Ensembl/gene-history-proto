@@ -16,7 +16,7 @@ function addHistorySVG(historyJson, container) {
       months.push(monthsSince0000(historyJson[release].date));
     }
     months = months.sort();
-    return months.length > 1 ? [ months.shift() - 1, months.pop() ] : [ months[0] - 1, months[0] ];
+    return months.length > 1 ? [ months.shift() - 1, months.pop() + 1 ] : [ months[0] - 1, months[0] + 1 ];
   })();
 
   var oneMonthInPixels = (width - padding * 2) / (monthRange[1] - monthRange[0]);
@@ -27,8 +27,8 @@ function addHistorySVG(historyJson, container) {
 
   // draw line
   var historyLine = svg.appendChild(document.createElementNS(svgNS, 'line'));
-  historyLine.setAttribute('x1', padding);
-  historyLine.setAttribute('x2', width - padding * 2);
+  historyLine.setAttribute('x1', 0);
+  historyLine.setAttribute('x2', width);
   historyLine.setAttribute('y1', yAxis);
   historyLine.setAttribute('y2', yAxis);
   historyLine.setAttribute('style', 'stroke:rgb(0,0,0);stroke-width:2');
