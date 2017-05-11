@@ -85,7 +85,7 @@ function compileChanges(changes) {
 
   var html = '';
   for (var type in changes) {
-    html = html + '<li><b>' + type + '</b>' + changes[type].join(', ') + '</li>';
+    html = html + '<li>' + type + '</li>';
   }
 
   return '<ul>' + html + '</ul>';
