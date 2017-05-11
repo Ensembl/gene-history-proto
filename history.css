@@ -10,6 +10,7 @@ div#svg-container {
 }
 
 div#svg-tip {
+  display: none;
   position: fixed;
   background: rgb(0, 0, 0) none repeat scroll 0% 0%;
   color: rgb(170, 170, 170);
