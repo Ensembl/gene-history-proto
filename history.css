@@ -24,3 +24,7 @@ div.image img {
   display: block;
   overflow: hidden;
 }
+
+.results .changes button {
+  margin: 8px;
+}

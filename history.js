@@ -30,16 +30,10 @@ var populateReleaseBox = function (ele, dataArray) {
   });
 };
 
-var displayImage = function(e) {
-  console.log('a');
-  var img1 = '/gene-history-proto/images/sequence_change.png';
-  var img2 = '/gene-history-proto/images/trans2.png';
-  // console.log(e);
-  console.log($(e.target).next().length);
-  if (!$(e.target).next('div.image').length) {
-    $('<div class="image"></div>').insertAfter(e.target);
-  }
-  $(e.target).next('div.image').html('<br><img src='+ img1 +'></img>');
+var displayImage = function(e, r) {
+  console.log(r);
+  var img1 = '/images/sequence_change.png';
+  $(e.target).siblings('div.image').html('<br><img src='+ img1 +'></img><button type="button" class="btn btn-primary"> Download Sequence</button>');
 }
 
 $(document).on('ready', function() {
@@ -57,7 +51,7 @@ $(document).on('ready', function() {
         var change_key = $(this).val();
         var rel_key = $('#dd_rel').val();
         $('#release-heading').html(" "+$('#dd_rel option:selected').text());
-
+        drawSelectionBox($('#svg-container'), rel_key);
         var html = '';
         if (change_key == 'All changes') {
           html += '<p class="title" style="font-weight:bold; margin-top:20px;">'+ change_key +'</p>';
@@ -73,7 +67,7 @@ $(document).on('ready', function() {
                 $.each(json[rel]['changes'][ch], function(i, val) {
                   html += '<ul class="changes">';
                   if (ch == 'Transcript sequence changed' || ch == 'Protein sequence changed') {
-                    val = '<a href="javascript:displayImage();">' + val + '</a> <button type="button" class="btn btn-default" onClick="displayImage(event);">View</button>';
+                    val = val + ' <button type="button" class="btn btn-default" onClick=displayImage(event,"'+rel+'");>View</button><div class="image"></div>';
                   }
                   html += '<li>'+ val +'</li>';
                   html += '</ul>';
