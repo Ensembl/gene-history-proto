@@ -64,7 +64,7 @@ function addHistorySVG(historyJson, container) {
       circle.setAttribute('fill', !!changes ? 'black' : 'white');
 
       // hover tool tip
-      $(circle).mouseenter({tip: '<p>Release: ' + release + '</p>' + compileChanges(changes)}, function() {
+      $(circle).mouseenter({tip: '<p>Release: ' + release + '</p>' + compileChanges(changes)}, function(e) {
         $('#svg-tip').html(e.data.tip).css({left: e.pageX, top: e.pageY}).show();
       });
       $(circle).mouseleave(function() {
