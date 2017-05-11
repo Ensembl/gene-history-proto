@@ -63,7 +63,7 @@ function addHistorySVG(historyJson, container) {
         text.setAttribute('y', height - 10);
         text.setAttribute('fill', 'rgb(200,200,200)');
         text.innerHTML = year;
-      })(i/12, (i - monthRange[0]) * oneMonthInPixels);
+      })(i/12, (i - monthRange[0] + 1) * oneMonthInPixels);
     }
   }
 }
