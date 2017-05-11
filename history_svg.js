@@ -25,6 +25,25 @@ function addHistorySVG(historyJson, container) {
     historyJson[release].offset = padding + (monthsSince0000(historyJson[release].date) - monthRange[0]) * oneMonthInPixels;
   }
 
+  // draw years bar
+  for (var i = monthRange[0]; i <= monthRange[1]; i++) {
+    if (i%12 == 0) {
+      (function(year, offsetX) {
+        var yearLine = svg.appendChild(document.createElementNS(svgNS, 'line'));
+        yearLine.setAttribute('x1', offsetX);
+        yearLine.setAttribute('x2', offsetX);
+        yearLine.setAttribute('y1', 0);
+        yearLine.setAttribute('y2', height);
+        yearLine.setAttribute('style', 'stroke:rgb(200,200,200);stroke-width:1');
+        var text = svg.appendChild(document.createElementNS(svgNS, 'text'));
+        text.setAttribute('x', offsetX + 5);
+        text.setAttribute('y', height - 10);
+        text.setAttribute('fill', 'rgb(200,200,200)');
+        text.innerHTML = year;
+      })(i/12, (i - monthRange[0] + 1) * oneMonthInPixels);
+    }
+  }
+
   // draw line
   var historyLine = svg.appendChild(document.createElementNS(svgNS, 'line'));
   historyLine.setAttribute('x1', 0);
@@ -46,25 +65,6 @@ function addHistorySVG(historyJson, container) {
         circle.setAttribute('fill', 'black');
       }
     })(historyJson[release].offset, release, historyJson[release].changes);
-  }
-
-  // draw years bar
-  for (var i = monthRange[0]; i <= monthRange[1]; i++) {
-    if (i%12 == 0) {
-      (function(year, offsetX) {
-        var yearLine = svg.appendChild(document.createElementNS(svgNS, 'line'));
-        yearLine.setAttribute('x1', offsetX);
-        yearLine.setAttribute('x2', offsetX);
-        yearLine.setAttribute('y1', 0);
-        yearLine.setAttribute('y2', height);
-        yearLine.setAttribute('style', 'stroke:rgb(200,200,200);stroke-width:1');
-        var text = svg.appendChild(document.createElementNS(svgNS, 'text'));
-        text.setAttribute('x', offsetX + 5);
-        text.setAttribute('y', height - 10);
-        text.setAttribute('fill', 'rgb(200,200,200)');
-        text.innerHTML = year;
-      })(i/12, (i - monthRange[0] + 1) * oneMonthInPixels);
-    }
   }
 }
 
