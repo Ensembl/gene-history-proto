@@ -20,11 +20,11 @@ div#svg-tip {
   border-radius: 3px;
 }
 
-div#svg-tip ul, .results .changes ul {
+div#svg-tip ul, .results ul {
   padding-left: 5px;
 }
 
-div#svg-tip li, .results .changes ul li {
+div#svg-tip li, .results ul li {
   list-style-type: none;
 }
 
