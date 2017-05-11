@@ -109,8 +109,8 @@ function drawSelectionBox(container, release) {
   var selectionBox = svg.lastChild;
 
   selectionBox.setAttribute('y', 0);
-  selectionBox.setAttribute('x', (releaseOffsets[release] + releaseOffsets[release - 1]) / 2);
-  selectionBox.setAttribute('width', dimensions.width - (releaseOffsets[release] + releaseOffsets[release - 1]) / 2);
+  selectionBox.setAttribute('x', (releaseOffsets[release] + releaseOffsets[release - 1] || 0) / 2);
+  selectionBox.setAttribute('width', dimensions.width - (releaseOffsets[release] + releaseOffsets[release - 1] || 0) / 2);
   selectionBox.setAttribute('height', dimensions.height);
   selectionBox.setAttribute('style', 'fill:rgb(185, 255, 50);fill-opacity:0.4');
 }
