@@ -1,3 +1,5 @@
+var historyURL = 'https://ens-hsr.github.io/gene-history-proto/data/history.json.js';
+
 var populateSelectBox = function (dd_changes, dd_rel, dataArray) {
         var changes = {};
     $.each(dataArray, function (k) {
@@ -14,64 +16,16 @@ var populateSelectBox = function (dd_changes, dd_rel, dataArray) {
     })
 };
 
-$(document).ready(function () {
-    var dataArray = 
-{
-    "89": {
-        "date": {
-            "month": "6",
-            "year": "2017"
-        },
-        "changes": {
-            "Updated transcript": ["FOXP2-202(ENST00000403559)"]
-        }
-    },
 
-    "88": {
-        "date": {
-            "month": "3",
-            "year": "2017"
-        },
-        "changes": {
-            "New transcript": ["FOXP2-004(ENST00000408937)"],
-            "Retired transcript": ["ENST0034"]
-        }
-    },
-
-    "83": {
-        "date": {
-            "month": "12",
-            "year": "2015"
-        },
-        "changes": {
-            "New transcript": ["ENST0003"],
-            "Retired transcript": ["ENST00010"]
-        }
-    },
-
-    "76": {
-        "date": {
-            "month": "8",
-            "year": "2014"
-        },
-        "changes": {
-            "Sequence changed": ["ENST00342", "ENST000231", "ENST1111"],
-            "New transcript": ["ENST0008", "ENST0001"],
-            "Assembly change": "GRCH38"
-        }
-    },
-
-    "75": {
-        "date": {
-            "month": "2",
-            "year": "2014"
-        },
-        "changes": {
-            "New transcript": ["ENST0032", "ENT00132"]
-        }
+$(document).on('ready', function() {
+  $.ajax({
+    url: historyURL,
+    dataType: 'json',
+    success: function (json) {
+      addHistorySVG(json, $('_svg_container'));
+      var dd_changes = $('#dd_changes');
+      var dd_rel = $('#dd_rel');
+      populateSelectBox(dd_changes, dd_rel, dataArray);
     }
-}
-    var dd_changes = $('#dd_changes');
-    var dd_rel = $('#dd_rel');
-    populateSelectBox(dd_changes, dd_rel, dataArray);
+  });
 });
