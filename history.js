@@ -32,14 +32,14 @@ var populateReleaseBox = function (ele, dataArray) {
 
 var displayImage = function(e) {
   console.log('a');
-  var img1 = '/gene-history-proto/images/trans1.png';
+  var img1 = '/gene-history-proto/images/sequence_change.png';
   var img2 = '/gene-history-proto/images/trans2.png';
   // console.log(e);
   console.log($(e.target).next().length);
   if (!$(e.target).next('div.image').length) {
     $('<div class="image"></div>').insertAfter(e.target);
   }
-  $(e.target).next('div.image').html('<br><img src='+ img1 +'></img><br><img src='+ img2 +'></img>');
+  $(e.target).next('div.image').html('<br><img src='+ img1 +'></img>');
 }
 
 $(document).on('ready', function() {
