@@ -26,10 +26,11 @@ function addHistorySVG(historyJson, container) {
 
   // draw line
   var historyLine = svg.appendChild(document.createElementNS(svgNS, 'line'));
-  historyLine.x1 = padding;
-  historyLine.x2 = width - padding * 2;
-  historyLine.y1 = historyLine.y2 = parseInt(height/2) - 1;
-  historyLine.style = 'stroke:rgb(0,0,0);stroke-width:2';
+  historyLine.setAttribute('x1', padding);
+  historyLine.setAttribute('x2', width - padding * 2);
+  historyLine.setAttribute('y1', parseInt(height/2) - 1);
+  historyLine.setAttribute('y2', parseInt(height/2) - 1);
+  historyLine.setAttribute('style', 'stroke:rgb(0,0,0);stroke-width:2');
 }
 
 function monthsSince0000(date) {
