@@ -61,9 +61,7 @@ function addHistorySVG(historyJson, container) {
       circle.setAttribute('r', 4);
       circle.setAttribute('stroke', 'black');
       circle.setAttribute('stroke-width', 1);
-      if (!!changes) {
-        circle.setAttribute('fill', 'black');
-      }
+      circle.setAttribute('fill', !!changes ? 'black' : 'white');
     })(historyJson[release].offset, release, historyJson[release].changes);
   }
 }
