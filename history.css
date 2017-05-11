@@ -19,6 +19,12 @@ div#svg-tip {
   border-radius: 3px;
 }
 
+span.colour-box {
+  height: 20px;
+  width: 30px;
+  display: inline-block;
+}
+
 div.image img {
   width: 300px;
   display: block;
