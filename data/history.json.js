@@ -101,7 +101,6 @@
 		},
 		"changes": {
 			"Transcript sequence changed": ["MED25-202(ENST00000612791.4)"],
-			"Amino sequence changed": [""],
 			"Assembly changed": ["GRCH38"],			
 		}
 	},
