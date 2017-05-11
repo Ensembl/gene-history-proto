@@ -18,3 +18,9 @@ div#svg-tip {
   padding: 6px;
   border-radius: 3px;
 }
+
+div.image img {
+  width: 300px;
+  display: block;
+  overflow: hidden;
+}

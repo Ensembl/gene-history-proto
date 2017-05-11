@@ -30,8 +30,16 @@ var populateReleaseBox = function (ele, dataArray) {
   });
 };
 
-var displayTranscriptImage = function() {
-  alert('show image')
+var displayImage = function(e) {
+  console.log('a');
+  var img1 = '/images/trans1.png';
+  var img2 = '/images/trans2.png';
+  // console.log(e);
+  console.log($(e.target).next().length);
+  if (!$(e.target).next('div.image').length) {
+    $('<div class="image"></div>').insertAfter(e.target);
+  }
+  $(e.target).next('div.image').html('<br><img src='+ img1 +'></img><br><img src='+ img2 +'></img>');
 }
 
 $(document).on('ready', function() {
@@ -55,19 +63,17 @@ $(document).on('ready', function() {
           html += '<p class="title">'+ change_key +'</p>';
 
           $.each(Object.keys(json).reverse(), function(i, rel) {
-            console.log('Running ', rel);
             if (json[rel]['changes']) {
               html += '<p class="title">Release '+ rel +'</p>';
             }
             if (json[rel]['changes']) {
-              console.log('Found', rel);
               $.each(json[rel]['changes'], function(ch) {
                 html += '<ul class="all_changes">';
                 html += '<li>'+ ch +'</li>';
                 $.each(json[rel]['changes'][ch], function(i, val) {
                   html += '<ul class="changes">';
                   if (ch == 'Transcript sequence changed' || ch == 'Protein sequence changed') {
-                    val = '<a href="javascript:displayTranscriptImage();">' + val + '</a> <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">View</button>';
+                    val = '<a href="javascript:displayImage();">' + val + '</a> <button type="button" class="btn btn-default" onClick="displayImage(event);">View</button>';
                   }
                   html += '<li>'+ val +'</li>';
                   html += '</ul>';
@@ -76,7 +82,6 @@ $(document).on('ready', function() {
               })
             }
             if (rel == rel_key) {
-              console.log(html);
               $('.results').html(html);
               return false;
             }
