@@ -73,14 +73,14 @@ $(document).on('ready', function() {
             if (json[rel]['changes']) {
               html += '<p class="title">Release '+ rel +'</p>';
 
-              $.each(json[rel]['changes'], function(type, ch) {
+              $.each(json[rel]['changes'], function(type) {
                 html += '<ul class="all_changes">';
-                html += '<li><span class="colour-box" style="background-color:' + COLOURS[type] + '"></span>'+ ch +'</li>';
+                html += '<li><span class="colour-box" style="background-color:' + COLOURS[type] + '"></span>'+ type +'</li>';
 
-                if (json[rel]['changes'][ch]) {
-                  $.each(json[rel]['changes'][ch], function(i, val) {
+                if (json[rel]['changes'][type]) {
+                  $.each(json[rel]['changes'][type], function(i, val) {
                     html += '<ul class="changes">';
-                    if (ch == 'Transcript sequence changed' || ch == 'Protein sequence changed') {
+                    if (type == 'Transcript sequence changed' || type == 'Protein sequence changed') {
                       val = val + ' <button type="button" class="btn btn-default" onClick=displayImage(event,"'+rel+'");>View</button><div class="image"></div>';
                     }
                     html += '<li>'+ val +'</li>';
@@ -107,6 +107,7 @@ $(document).on('ready', function() {
               html += '<p class="title">Release '+ rel +'</p>';
 
               if (json[rel]['changes'][change_key]) {
+                html += '<li><span class="colour-box" style="background-color:' + COLOURS[change_key] + '"></span>'+ change_key +'</li>';
                 $.each(json[rel]['changes'][change_key], function(i, val) {
                   html += '<ul class="changes">';
                   if (change_key == 'Transcript sequence changed' || change_key == 'Protein sequence changed') {
