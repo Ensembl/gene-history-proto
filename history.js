@@ -35,27 +35,49 @@ $(document).on('ready', function() {
     success: function (json) {
       addHistorySVG(json, $('._svg_container'));
       populateReleaseBox($('#dd_rel'), json);
-      populateSelectBox($('#dd_changes'), json);
+      // populateSelectBox($('#dd_changes'), json);
 
       $('#dd_changes').on('change', function() {
         var change_key = $(this).val();
         var rel_key = $('#dd_rel').val();
-
-        if (json[rel_key]['changes'] && json[rel_key]['changes'][change_key]) {
-          // console.log(json[rel_key]['changes'][key]);
-          var html = '<p class="title">'+ change_key +'</p>';
-          $.each(json[rel_key]['changes'][change_key], function(i, val) {
-            html += '<ul class="changes">';
-            html += '<li>'+ val +'</li>';
-            html += '</ul>';
-          })
-          $('.results').html(html);
+        var html = '';
+        if (change_key == 'All changes') {
+          html += '<p class="title">'+ change_key +'</p>';
+          if (json[rel_key]['changes']) {
+            $.each(json[rel_key]['changes'], function(ch) {
+              html += '<ul class="all_changes">';
+              html += '<li>'+ ch +'</li>';
+              $.each(json[rel_key]['changes'][ch], function(i, val) {
+                html += '<ul class="changes">';
+                html += '<li>'+ val +'</li>';
+                html += '</ul>';
+              });
+              html += '</ul>';
+            })
+          }
+        }          
+        else {
+          if (json[rel_key]['changes'] && json[rel_key]['changes'][change_key]) {
+            // console.log(json[rel_key]['changes'][key]);
+            html = '<p class="title">'+ change_key +'</p>';
+            $.each(json[rel_key]['changes'][change_key], function(i, val) {
+              html += '<ul class="changes">';
+              html += '<li>'+ val +'</li>';
+              html += '</ul>';
+            })
+          }
         }
+
+        $('.results').html(html);
+
       });
 
       $('#dd_rel').on('change', function() {
         populateSelectBox($('#dd_changes'), json);
+        $('#dd_changes').trigger('change');
       });
+
+      $('#dd_rel').trigger('change');
 
     }
   });
