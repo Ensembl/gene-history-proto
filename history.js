@@ -60,7 +60,7 @@ $(document).on('ready', function() {
 
         var html = '';
         if (change_key == 'All changes') {
-          html += '<p class="title">'+ change_key +'</p>';
+          html += '<p class="title" style="font-weight:bold; margin-top:20px;">'+ change_key +'</p>';
 
           $.each(Object.keys(json).reverse(), function(i, rel) {
             if (json[rel]['changes']) {
@@ -90,7 +90,7 @@ $(document).on('ready', function() {
         else {
           if (json[rel_key]['changes'] && json[rel_key]['changes'][change_key]) {
             // console.log(json[rel_key]['changes'][key]);
-            html = '<p class="title">'+ change_key +'</p>';
+            html = '<p class="title" style="font-weight:bold; margin-top:20px;">'+ change_key +'</p>';
             $.each(json[rel_key]['changes'][change_key], function(i, val) {
               html += '<ul class="changes">';
               html += '<li>'+ val +'</li>';
