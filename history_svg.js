@@ -3,6 +3,7 @@ var svgNS = 'http://www.w3.org/2000/svg';
 var releaseOffsets = {};
 var lastRelease = 0;
 var dimensions = {}
+var selectorHeight = 30;
 
 function addHistorySVG(historyJson, container) {
   var height = container.height();
@@ -109,11 +110,11 @@ function drawSelectionBox(container, release) {
   var svg = container.find('svg')[0];
   var selectionBox = svg.getElementsByTagName('rect')[0];
 
-  selectionBox.setAttribute('y', 30);
+  selectionBox.setAttribute('y', (dimensions.height - selectorHeight)/2 - 1);
   selectionBox.setAttribute('x', releaseOffsets[release] - 5);
   selectionBox.setAttribute('rx', 5);
   selectionBox.setAttribute('ry', 5);
   selectionBox.setAttribute('width', releaseOffsets[lastRelease] - releaseOffsets[release] + 10);
-  selectionBox.setAttribute('height', dimensions.height - 60);
+  selectionBox.setAttribute('height', selectorHeight);
   selectionBox.setAttribute('style', 'fill:rgb(185, 255, 50);fill-opacity:0.4');
 }
