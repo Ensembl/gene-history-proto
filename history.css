@@ -1,3 +1,19 @@
-html, body { height: 100%; margin: 0; background: #fff; }
+html, body {
+  height: 100%;
+  margin: 0;
+  background: #fff;
+}
 
-div.svg-container { height: 100px; width: 100%; }
+div#svg-container {
+  height: 100px;
+  width: 100%;
+}
+
+div#svg-tip {
+  position: fixed;
+  background: rgb(0, 0, 0) none repeat scroll 0% 0%;
+  color: rgb(170, 170, 170);
+  margin: 6px;
+  padding: 6px;
+  border-radius: 3px;
+}
