@@ -101,7 +101,7 @@
 		},
 		"changes": {
 			"Transcript sequence changed": ["MED25-202(ENST00000612791.4)"],
-			"Assembly changed": ["GRCH38"],			
+			"Assembly changed": ["GRCH38"]
 		}
 	},
 
@@ -109,7 +109,7 @@
 		"date": {
 			"month": "2",
 			"year": "2014"
-		},
+		}
 	},
 
 	"74": {
@@ -144,7 +144,7 @@
 		"date": {
 			"month": "8",
 			"year": "2012"
-		},
+		}
 
 	}
 
