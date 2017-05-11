@@ -62,10 +62,31 @@ function addHistorySVG(historyJson, container) {
       circle.setAttribute('stroke', 'black');
       circle.setAttribute('stroke-width', 1);
       circle.setAttribute('fill', !!changes ? 'black' : 'white');
+
+      // hover tool tip
+      $(circle).mouseenter({tip: '<p>Release: ' + release + '</p>' + compileChanges(changes)}, function() {
+        $('#svg-tip').html(e.data.tip).css({left: e.pageX, top: e.pageY}).show();
+      });
+      $(circle).mouseleave(function() {
+        $('#svg-tip').empty().hide();
+      });
     })(historyJson[release].offset, release, historyJson[release].changes);
   }
 }
 
 function monthsSince0000(date) {
   return parseInt(date.year) * 12 + parseInt(date.month);
+}
+
+function compileChanges(changes) {
+  if (!changes) {
+    return '<p>No changes</p>';
+  }
+
+  var html = '';
+  for (var type in changes) {
+    html = html + '<li><b>' + type + '</b>' + changes[type].join(', ') + '</li>';
+  }
+
+  return '<ul>' + html + '</ul>';
 }
