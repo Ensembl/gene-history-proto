@@ -48,6 +48,7 @@ $(document).on('ready', function() {
       $('#dd_changes').on('change', function() {
         var change_key = $(this).val();
         var rel_key = $('#dd_rel').val();
+        $('#release-heading').html(" "+$('#dd_rel option:selected').text());
 
         var html = '';
         if (change_key == 'All changes') {
