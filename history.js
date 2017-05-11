@@ -30,10 +30,13 @@ var populateReleaseBox = function (ele, dataArray) {
   });
 };
 
+var _alert = function(str) {
+  alert(str);
+}
+
 var displayImage = function(e, r) {
-  console.log(r);
   var img1 = '/gene-history-proto/images/sequence_change.png';
-  $(e.target).siblings('div.image').html('<br><img src='+ img1 +'></img><button type="button" class="btn btn-primary"> Download Sequence</button>');
+  $(e.target).siblings('div.image').html('<br><img src='+ img1 +'></img><button type="button" class="btn btn-primary" onClick="_alert(\'Sequence successfully downloaded\');"> Download Sequence</button>');
 }
 
 $(document).on('ready', function() {
