@@ -26,7 +26,7 @@ var populateReleaseBox = function (ele, dataArray) {
   ele.html('');
   Object.keys(dataArray).reverse().forEach(function(rel) {
     var month = dataArray[rel].date.month.length === 1 ? "0" + dataArray[rel].date.month : dataArray[rel].date.month;
-    ele.append("<option value="+ rel +">Since release " + rel + " ("+ month + "/" + dataArray[rel].date.year+")</option>");    
+    ele.append("<option value="+ rel +">release " + rel + " ("+ month + "/" + dataArray[rel].date.year+")</option>");    
   });
 };
 
