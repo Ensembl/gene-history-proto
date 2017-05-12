@@ -1,19 +1,19 @@
 var historyURL = 'https://ens-hsr.github.io/gene-history-proto/data/history.json.js';
 var GENE = (window.location.hash.match('gene=([^\;]+)') || ['XYZ']).pop();
 
-var populateSelectBox = function (ele, dataArray) {
-  var all_changes = {};
+var populateSelectBox = function (ele, dataArray, default_selected) {
+  var all_types = {};
   $.each(dataArray, function (k) {
     $.each(dataArray[k].changes, function(ch) {
-      all_changes[ch] = 1;
+      all_types[ch] = 1;
     })
   });
 
-  var available_changes = {};
+  var available_types = {};
   var rel_key = $('#dd_rel').val();
   $.each(Object.keys(dataArray).reverse(), function(i, rel) {
     $.each(dataArray[rel].changes, function(ch) {
-      available_changes[ch] = 1;
+      available_types[ch] = 1;
     });
     if (rel == rel_key) {
       return false;
@@ -22,12 +22,13 @@ var populateSelectBox = function (ele, dataArray) {
 
   ele.html('');
   ele.append("<option> All changes </option>");
-  Object.keys(all_changes).forEach(function(change) {
+  Object.keys(all_types).forEach(function(type) {
     var icon = '<span class="glyphicon glyphicon-unchecked aria-hidden="true"></span>';
     var disabled = 'disabled';
+    var selected = (default_selected === type) ? ' selected="selected" ' : '';
 
-    disabled = available_changes[change] ? '' : 'disabled';
-    ele.append("<option "+ disabled +">" + change + "</option>");
+    disabled = available_types[type] ? '' : 'disabled';
+    ele.append("<option "+ disabled + selected +">" + type + "</option>");
   });
 };
 
@@ -59,9 +60,9 @@ $(document).on('ready', function() {
       json = JSON.parse(JSON.stringify(json).replace(/__gene__/g, GENE));
       addHistorySVG(json, $('._svg_container'));
       populateReleaseBox($('#dd_rel'), json);
-      // populateSelectBox($('#dd_changes'), json);
+      // populateSelectBox($('#dd_types'), json);
 
-      $('#dd_changes').on('change', function() {
+      $('#dd_types').on('change', function() {
         var change_key = $(this).val();
         var rel_key = $('#dd_rel').val();
         drawSelectionBox($('#svg-container'), rel_key);
@@ -74,8 +75,8 @@ $(document).on('ready', function() {
               html += '<p class="title">Release '+ rel +'</p>';
 
               $.each(json[rel]['changes'], function(type) {
-                html += '<ul class="all_changes">';
-                html += '<li><span class="colour-box" style="background-color:' + COLOURS[type] + '"></span>'+ type +'</li>';
+                html += '<ul class="all_types">';
+                html += '<li class="subtitle"><span class="colour-box" style="background-color:' + COLOURS[type] + '"></span>'+ type +'</li>';
 
                 if (json[rel]['changes'][type]) {
                   $.each(json[rel]['changes'][type], function(i, val) {
@@ -87,11 +88,10 @@ $(document).on('ready', function() {
                     html += '</ul>';
                   });
                 }
-                else {
-                  html += '<p> -- Nothing changed </p>'
-                }
+
                 html += '</ul>';
               })
+              html += '<hr>'
             }
 
             if (rel == rel_key) {
@@ -103,26 +103,19 @@ $(document).on('ready', function() {
         else {
 
           $.each(Object.keys(json).reverse(), function(i, rel) {
-            if (json[rel]['changes']) {
+            if (json[rel]['changes'] && json[rel]['changes'][change_key]) {
               html += '<p class="title">Release '+ rel +'</p>';
-
-              if (json[rel]['changes'][change_key]) {
-                html += '<ul>';
-                html += '<li><span class="colour-box" style="background-color:' + COLOURS[change_key] + '"></span>'+ change_key +'</li>';
-                $.each(json[rel]['changes'][change_key], function(i, val) {
-                  html += '<ul class="changes">';
-                  if (change_key == 'Transcript sequence changed' || change_key == 'Protein sequence changed') {
-                    val = val + ' <button type="button" class="btn btn-default" onClick=displayImage(event,"'+rel+'");>View</button><div class="image"></div>';
-                  }
-                  html += '<li>'+ val +'</li>';
-                  html += '</ul>';
-                });
+              html += '<ul>';
+              html += '<li class="subtitle"><span class="colour-box" style="background-color:' + COLOURS[change_key] + '"></span>'+ change_key +'</li>';
+              $.each(json[rel]['changes'][change_key], function(i, val) {
+                html += '<ul class="changes">';
+                if (change_key == 'Transcript sequence changed' || change_key == 'Protein sequence changed') {
+                  val = val + ' <button type="button" class="btn btn-default" onClick=displayImage(event,"'+rel+'");>View</button><div class="image"></div>';
+                }
+                html += '<li class="item">'+ val +'</li>';
                 html += '</ul>';
-
-              }
-              else {
-                html += '<p> -- Nothing changed </p>';
-              }
+              });
+              html += '</ul>';
             }
 
             if (rel == rel_key) {
@@ -137,8 +130,9 @@ $(document).on('ready', function() {
       });
 
       $('#dd_rel').on('change', function() {
-        populateSelectBox($('#dd_changes'), json);
-        $('#dd_changes').trigger('change');
+        var current_type = $('#dd_types').val();
+        populateSelectBox($('#dd_types'), json, current_type);
+        $('#dd_types').trigger('change');
       });
 
       $('#dd_rel').trigger('change');
