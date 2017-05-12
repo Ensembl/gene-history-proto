@@ -4,6 +4,16 @@ html, body {
   background: #fff;
 }
 
+.navbar-inverse {
+  background-color: #336;
+}
+.navbar-brand{
+  background: url('http://www.ensembl.org/i/e-ensembl.png') no-repeat;
+  width: 250px;
+  background-size: 132px;
+  background-position: left center;
+}
+
 div#svg-container {
   height: 70px;
   width: 100%;
