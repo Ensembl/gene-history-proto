@@ -46,8 +46,20 @@ var _alert = function(str) {
 }
 
 var displayImage = function(e, r) {
-  var img1 = '/gene-history-proto/images/sequence_change.png';
-  $(e.target).siblings('div.image').html('<br><img src='+ img1 +'></img><button type="button" class="btn btn-primary" onClick="_alert(\'Sequence successfully downloaded\');"> Download Sequence</button>');
+  if ($(e.target).html() == 'View') {
+    if (!$(e.target).siblings('div.image').html()) {
+      var img1 = '/gene-history-proto/images/sequence_change.png';
+      $(e.target).siblings('div.image').html('<br><img src='+ img1 +'></img><button type="button" class="btn btn-primary" onClick="_alert(\'Sequence successfully downloaded\');"> Download Sequence</button>');
+    }
+    else {
+      $(e.target).siblings('div.image').show();
+    }
+  }
+  else {
+    $(e.target).siblings('div.image').hide();
+  }
+
+  $(e.target).html(($(e.target).html() == 'View')? 'Hide' : 'View');
 }
 
 $(document).on('ready', function() {
