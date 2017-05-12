@@ -6,7 +6,7 @@ var populateSelectBox = function (ele, dataArray, default_selected) {
   $.each(dataArray, function (k) {
     $.each(dataArray[k].changes, function(ch) {
       all_types[ch] = 1;
-    })
+    });
   });
 
   var available_types = {};
@@ -41,25 +41,38 @@ var populateReleaseBox = function (ele, dataArray) {
 };
 
 var _alert = function(str) {
-  alert(str);
-  confirm('Would you like to get alerts when something changes for this gene? CLICK HERE')
+  $('#alertModal .modal-title').html('Download');
+  $('#alertModal .modal-body p').html('Your sequence will be downloaded');
+  $('#alertModal').modal();
+
+  $('#alertModal').on('hidden.bs.modal', function () {
+    $('#createAlertModal').modal();
+  })
 }
 
-var displayImage = function(e, r) {
-  if ($(e.target).html() == 'View') {
-    if (!$(e.target).siblings('div.image').html()) {
-      var img1 = '/gene-history-proto/images/sequence_change.png';
-      $(e.target).siblings('div.image').html('<br><img src='+ img1 +'></img><button type="button" class="btn btn-primary" onClick="_alert(\'Sequence successfully downloaded\');"> Download Sequence</button>');
+var buttonClick = function(e) {
+  var type = ($(e.target).data('type'));
+
+  if (type.match('sequence')) {
+    if ($(e.target).html() == 'View details') {
+      if (!$(e.target).siblings('div.image').html()) {
+        var img1 = '/gene-history-proto/images/sequence_change.png';
+        $(e.target).siblings('div.image').html('<br><img src='+ img1 +'></img><button type="button" class="btn btn-primary btn-sm" onClick="_alert(\'Sequence successfully downloaded\');"> Download Sequence</button>');
+      }
+      else {
+        $(e.target).siblings('div.image').show();
+      }
     }
     else {
-      $(e.target).siblings('div.image').show();
+      $(e.target).siblings('div.image').hide();
     }
+    $(e.target).html(($(e.target).html() == 'View details')? 'Hide details' : 'View details');
   }
   else {
-    $(e.target).siblings('div.image').hide();
+    $('#alertModal .modal-title').html(BUTTONS[type]['text']);
+    $('#alertModal .modal-body p').html(BUTTONS[type]['message']);
+    $('#alertModal').modal();
   }
-
-  $(e.target).html(($(e.target).html() == 'View')? 'Hide' : 'View');
 }
 
 $(document).on('ready', function() {
@@ -93,9 +106,7 @@ $(document).on('ready', function() {
                 if (json[rel]['changes'][type]) {
                   $.each(json[rel]['changes'][type], function(i, val) {
                     html += '<ul class="changes">';
-                    if (type == 'Transcript sequence changed' || type == 'Protein sequence changed') {
-                      val = val + ' <button type="button" class="btn btn-default" onClick=displayImage(event,"'+rel+'");>View</button><div class="image"></div>';
-                    }
+                    val = '<span class="item">' + val + '</span> <button type="button" class="btn btn-default btn-xs" data-type="'+ type +'" onClick=buttonClick(event,"'+rel+'");>'+ BUTTONS[type]['text'] +'</button><div class="image"></div>';
                     html += '<li>'+ val +'</li>';
                     html += '</ul>';
                   });
@@ -121,9 +132,7 @@ $(document).on('ready', function() {
               html += '<li class="subtitle"><span class="colour-box" style="background-color:' + COLOURS[change_key] + '"></span>'+ change_key +'</li>';
               $.each(json[rel]['changes'][change_key], function(i, val) {
                 html += '<ul class="changes">';
-                if (change_key == 'Transcript sequence changed' || change_key == 'Protein sequence changed') {
-                  val = val + ' <button type="button" class="btn btn-default" onClick=displayImage(event,"'+rel+'");>View</button><div class="image"></div>';
-                }
+                val = val + ' <button type="button" class="btn btn-default btn-xs" data-type="'+ change_key +'" onClick=buttonClick(event,"'+rel+'");>'+ BUTTONS[change_key]['text'] +'</button><div class="image"></div>';
                 html += '<li class="item">'+ val +'</li>';
                 html += '</ul>';
               });
