@@ -93,7 +93,7 @@ $(document).on('ready', function() {
         var rel_key    = $('#dd_rel').val();
         drawSelectionBox($('#svg-container'), rel_key);
         var pre_text   = disabled ? 'No' : 'Showing';
-        var html = '<i><p class="subtitle">'+ pre_text +' <b>'+ change_key.toLowerCase() +'</b> changes between <b>' + (rel_key-1) + '</b> and <b>' + Object.keys(json).reverse()[0] +'</b></p></i><hr>';
+        var html = '<i><p class="subtitle">'+ pre_text +' <b>'+ change_key.toLowerCase() +'</b> changes between release <b>' + (rel_key-1) + '</b> and <b>' + Object.keys(json).reverse()[0] +'</b></p></i><hr>';
 
         if (change_key == 'All') {
           // $.each(Object.keys(json).reverse(), function(i, rel) {
