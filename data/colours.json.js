@@ -1,8 +1,8 @@
 var COLOURS = {
   "New transcripts": "#060",
   "Retired transcript": "#900",
-  "Transcript sequence": "#009",
-  "Assembly": "#990"
+  "Transcript sequence": "#09c",
+  "Assembly": "#909"
 };
 
 var BUTTONS = {
