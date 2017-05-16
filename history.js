@@ -129,7 +129,7 @@ $(document).on('ready', function() {
             if (json[rel]['changes'] && json[rel]['changes'][change_key]) {
               html += '<p class="title">Release '+ rel +'</p>';
               html += '<ul>';
-              html += '<li class="subtitle"><span class="colour-box" style="background-color:' + COLOURS[change_key] + '"></span>'+ change_key +'</li>';
+              html += '<li class="subtitle"><span class="colour-box" style="background-color:' + COLOURS[change_key] + '">'+ change_key +'</span></li>';
               $.each(json[rel]['changes'][change_key], function(i, val) {
                 html += '<ul class="changes">';
                 val = val + ' <button type="button" class="btn btn-default btn-xs" data-type="'+ change_key +'" onClick=buttonClick(event,"'+rel+'");>'+ BUTTONS[change_key]['text'] +'</button><div class="image"></div>';
