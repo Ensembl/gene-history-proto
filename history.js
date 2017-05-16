@@ -75,6 +75,19 @@ var buttonClick = function(e) {
   }
 }
 
+var createListOfChangesHTML = function(change_obj, type, rel) {
+  var html = '';
+  if (change_obj && change_obj[type]) {
+    $.each(change_obj[type], function(i, val) {
+      html += '<ul class="changes">';
+      val = '<span class="item">' + val + '</span> <button type="button" class="btn btn-default btn-xs" data-type="'+ type +'" onClick=buttonClick(event,"'+rel+'");>'+ BUTTONS[type]['text'] +'</button><div class="image"></div>';
+      html += '<li>'+ val +'</li>';
+      html += '</ul>';
+    });
+  }
+  return html;
+}
+
 $(document).on('ready', function() {
   $('#gene-name-heading').html(GENE);
   $.ajax({
@@ -107,12 +120,7 @@ $(document).on('ready', function() {
                 html += '<li class="subtitle"><span class="colour-box" style="background-color:' + COLOURS[type] + '">'+ type +'</span></li>';
 
                 if (json[rel]['changes'][type]) {
-                  $.each(json[rel]['changes'][type], function(i, val) {
-                    html += '<ul class="changes">';
-                    val = '<span class="item">' + val + '</span> <button type="button" class="btn btn-default btn-xs" data-type="'+ type +'" onClick=buttonClick(event,"'+rel+'");>'+ BUTTONS[type]['text'] +'</button><div class="image"></div>';
-                    html += '<li>'+ val +'</li>';
-                    html += '</ul>';
-                  });
+                  html += createListOfChangesHTML(json[rel]['changes'], type, rel);
                 }
 
                 html += '</ul>';
@@ -130,12 +138,7 @@ $(document).on('ready', function() {
               html += '<p class="title">Release '+ rel +'</p>';
               html += '<ul>';
               html += '<li class="subtitle"><span class="colour-box" style="background-color:' + COLOURS[change_key] + '">'+ change_key +'</span></li>';
-              $.each(json[rel]['changes'][change_key], function(i, val) {
-                html += '<ul class="changes">';
-                val = val + ' <button type="button" class="btn btn-default btn-xs" data-type="'+ change_key +'" onClick=buttonClick(event,"'+rel+'");>'+ BUTTONS[change_key]['text'] +'</button><div class="image"></div>';
-                html += '<li class="item">'+ val +'</li>';
-                html += '</ul>';
-              });
+              html += createListOfChangesHTML(json[rel]['changes'], change_key, rel);
               html += '</ul>';
             }
           }
