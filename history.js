@@ -104,7 +104,7 @@ $(document).on('ready', function() {
 
               $.each(json[rel]['changes'], function(type) {
                 html += '<ul class="all_types">';
-                html += '<li class="subtitle"><span class="colour-box" style="background-color:' + COLOURS[type] + '"></span>'+ type +'</li>';
+                html += '<li class="subtitle"><span class="colour-box" style="background-color:' + COLOURS[type] + '">'+ type +'</span></li>';
 
                 if (json[rel]['changes'][type]) {
                   $.each(json[rel]['changes'][type], function(i, val) {
