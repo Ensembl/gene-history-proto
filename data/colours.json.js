@@ -1,5 +1,5 @@
 var COLOURS = {
-  "New transcripts": "#090",
+  "New transcripts": "#060",
   "Retired transcript": "#900",
   "Transcript sequence": "#009",
   "Assembly": "#990"
