@@ -1,4 +1,4 @@
-var historyURL = 'https://ens-hsr.github.io/gene-history-proto/data/history.json.js';
+var historyURL = 'data/history.json.js';
 var GENE = (window.location.hash.match('gene=([^\;]+)') || ['XYZ']).pop();
 
 var populateSelectBox = function (ele, dataArray, default_selected) {
@@ -21,7 +21,7 @@ var populateSelectBox = function (ele, dataArray, default_selected) {
   });
 
   ele.html('');
-  ele.append("<option> All changes </option>");
+  ele.append("<option> All </option>");
   Object.keys(all_types).forEach(function(type) {
     var icon = '<span class="glyphicon glyphicon-unchecked aria-hidden="true"></span>';
     var disabled = 'disabled';
@@ -88,14 +88,17 @@ $(document).on('ready', function() {
       // populateSelectBox($('#dd_types'), json);
 
       $('#dd_types').on('change', function() {
-        var change_key = $(this).val();
-        var rel_key = $('#dd_rel').val();
+        var change_key = $('#dd_types :selected').val();
+        var disabled   = $('#dd_types :selected').attr('disabled');
+        var rel_key    = $('#dd_rel').val();
         drawSelectionBox($('#svg-container'), rel_key);
-        var html = '';
+        var pre_text   = disabled ? 'No' : 'Showing';
+        var html = '<i><p class="subtitle">'+ pre_text +' <b>'+ change_key.toLowerCase() +'</b> changes between <b>' + (rel_key-1) + '</b> and <b>' + Object.keys(json).reverse()[0] +'</b></p></i><hr>';
 
-
-        if (change_key == 'All changes') {
-          $.each(Object.keys(json).reverse(), function(i, rel) {
+        if (change_key == 'All') {
+          // $.each(Object.keys(json).reverse(), function(i, rel) {
+          for (var i=rel_key; i<=Object.keys(json).reverse()[0]; i++) {
+            var rel = i;
             if (json[rel]['changes']) {
               html += '<p class="title">Release '+ rel +'</p>';
 
@@ -116,16 +119,13 @@ $(document).on('ready', function() {
               })
               html += '<hr>'
             }
-
-            if (rel == rel_key) {
-              $('.results').html(html);
-              return false;
-            }
-          })
+          }
         }          
         else {
 
-          $.each(Object.keys(json).reverse(), function(i, rel) {
+          // $.each(Object.keys(json).reverse(), function(i, rel) {
+          for (var i=rel_key; i<=Object.keys(json).reverse()[0]; i++) {
+            var rel = i;
             if (json[rel]['changes'] && json[rel]['changes'][change_key]) {
               html += '<p class="title">Release '+ rel +'</p>';
               html += '<ul>';
@@ -138,12 +138,7 @@ $(document).on('ready', function() {
               });
               html += '</ul>';
             }
-
-            if (rel == rel_key) {
-              $('.results').html(html);
-              return false;
-            }
-          })
+          }
         }
 
         $('.results').html(html);
@@ -151,7 +146,7 @@ $(document).on('ready', function() {
       });
 
       $('#dd_rel').on('change', function() {
-        var current_type = $('#dd_types').val();
+        var current_type = $('#dd_types :selected').val();
         populateSelectBox($('#dd_types'), json, current_type);
         $('#dd_types').trigger('change');
       });

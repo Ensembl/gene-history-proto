@@ -114,8 +114,8 @@
 			"year": "2014"
 		},
 		"changes": {
-			"Transcript sequence changed": ["__gene__-202 (ENST00000612791.4)"],
-			"Assembly changed": ["GRCH38"]
+			"Transcript sequence": ["__gene__-202 (ENST00000612791.4)"],
+			"Assembly": ["GRCH38"]
 		}
 	},
 

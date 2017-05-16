@@ -1,8 +1,8 @@
 var COLOURS = {
   "New transcripts": "#090",
   "Retired transcript": "#900",
-  "Transcript sequence changed": "#009",
-  "Assembly changed": "#990"
+  "Transcript sequence": "#009",
+  "Assembly": "#990"
 };
 
 var BUTTONS = {
@@ -14,10 +14,10 @@ var BUTTONS = {
     'text'   : "View in archive",
     'message': "This will open transcript page on e! archive site"
   },    
-  "Transcript sequence changed": {
+  "Transcript sequence": {
     'text'   : "View details"
   },
-  "Assembly changed": {
+  "Assembly": {
     'text'   : "More Information",
     'message': "This will give you more information on the assembly changed"
   }
